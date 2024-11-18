@@ -1,0 +1,148 @@
+<!-- TASK-3 WEB DEVELOPMENT INTERNSHIP-->
+<!--CALCULATOR-->
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Calculator</title>
+<style>
+body {
+  font-family: sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: white;
+}
+
+.calculator {
+  background-color: pink;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.display {
+  background-color: beige;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 24px;
+  text-align: right;
+  margin-bottom: 10px;
+}
+
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 10px;
+}
+
+button {
+  background-color: beige;
+  border: none;
+  padding: 15px;
+  border-radius: 10px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: whitesmoke;
+}
+
+.operator {
+  background-color: lightcoral;
+}
+
+.equal {
+  background-color: lightcoral;
+}
+</style>
+</head>
+<body>
+
+<div class="calculator">
+  <div class="display" id="display">0</div>
+  <div class="buttons">
+    <button onclick="appendNumber('7')">7</button>
+    <button onclick="appendNumber('8')">8</button>
+    <button onclick="appendNumber('9')">9</button>
+    <button onclick="appendOperator('+')" class="operator">+</button>
+
+    <button onclick="appendNumber('4')">4</button>
+    <button onclick="appendNumber('5')">5</button>
+    <button onclick=" appendNumber('6')">6</button>
+    <button onclick="appendOperator('-')" class="operator">-</button>
+
+    <button onclick="appendNumber('1')">1</button>
+    <button onclick="appendNumber('2')">2</button>
+    <button onclick="appendNumber('3')">3</button>
+    <button onclick="appendOperator('*')" class="operator">*</button>
+
+    <button onclick="appendNumber('0')">0</button>
+    <button onclick="calculate()" class="equal">=</button>
+    <button onclick="clearDisplay()">C</button>
+    <button onclick="appendOperator('/')" class="operator">/</button>
+  </div>
+</div>
+
+<script>
+let currentInput = '';
+let operator = '';
+let firstOperand = null;
+
+function appendNumber(number) {
+  currentInput += number;
+  updateDisplay();
+}
+
+function appendOperator(op) {
+  if (currentInput === '') return;
+  if (firstOperand === null) {
+    firstOperand = parseFloat(currentInput);
+  } else {
+    calculate();
+  }
+  operator = op;
+  currentInput = '';
+}
+
+function calculate() {
+  if (firstOperand === null || currentInput === '') return;
+  let secondOperand = parseFloat(currentInput);
+  let result;
+  switch (operator) {
+    case '+':
+      result = firstOperand + secondOperand;
+      break;
+    case '-':
+      result = firstOperand - secondOperand;
+      break;
+    case '*':
+      result = firstOperand * secondOperand;
+      break;
+    case '/':
+      result = firstOperand / secondOperand;
+      break;
+    default:
+      return;
+  }
+  currentInput = result.toString();
+  operator = '';
+  firstOperand = null;
+  updateDisplay();
+}
+
+function clearDisplay() {
+  currentInput = '';
+  operator = '';
+  firstOperand = null;
+  updateDisplay();
+}
+
+function updateDisplay() {
+  document.getElementById('display').innerText = currentInput || '0';
+}
+</script>
+</body>
+</html>
